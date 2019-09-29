@@ -10,10 +10,13 @@ OakFrame is for people who want to write complex and interactive javascript with
 Renders in line, or fullscreen depending on rendering settings.  
 Prints charts ( & live docs ):
 https://oakframe.org/design-systems/the-anthology-of-ants/
-![alt text](https://oakframe.org/wp-content/uploads/2019/09/Screen-Shot-2019-09-29-at-3.36.02-AM.png)
+
+<img src="https://oakframe.org/wp-content/uploads/2019/09/Screen-Shot-2019-09-29-at-3.36.02-AM.png" width="100%">
+
+[]()
 Fullscreen Mobile & Desktop response game engines in browser:
 https://oakframe.org/2019/06/29/hello-world/
-![alt text](https://oakframe.org/wp-content/uploads/2019/09/Screen-Shot-2019-09-29-at-3.33.37-AM.png)
+![](https://oakframe.org/wp-content/uploads/2019/09/Screen-Shot-2019-09-29-at-3.33.37-AM.png)
 
 How to use it
 ------
