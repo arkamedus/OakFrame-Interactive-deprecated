@@ -1,14 +1,14 @@
-import {Surface} from "./oakframe/Surface";
-import {Vec3} from "./oakframe/Vec3";
-import {Vec2} from "./oakframe/Vec2";
-import {Sprite} from "./oakframe/Sprite";
-import {Face3, Mesh} from "./oakframe/Mesh";
-import {Project} from "./oakframe/Project";
-import {RoomObject} from "./oakframe/RoomObject";
-import {Camera} from "./oakframe/Camera";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Surface_1 = require("./oakframe/Surface");
+const Vec3_1 = require("./oakframe/Vec3");
+const Vec2_1 = require("./oakframe/Vec2");
+const Sprite_1 = require("./oakframe/Sprite");
+const Mesh_1 = require("./oakframe/Mesh");
+const Project_1 = require("./oakframe/Project");
+const RoomObject_1 = require("./oakframe/RoomObject");
+const Camera_1 = require("./oakframe/Camera");
 function OakFrame() {
-
     return {
         getContext: function () {
             if (!window['OakContext']) {
@@ -17,19 +17,19 @@ function OakFrame() {
             return window['OakContext'];
         },
         getContainer: function () {
-            return window['Oak'].container||document.body;
+            return window['Oak'].container || document.body;
         },
         Math: {
-            Vec3: Vec3,
-            Vec2: Vec2,
-            Mesh: Mesh,
-            Face3: Face3
+            Vec3: Vec3_1.Vec3,
+            Vec2: Vec2_1.Vec2,
+            Mesh: Mesh_1.Mesh,
+            Face3: Mesh_1.Face3
         },
-        Surface: Surface,
-        Sprite: Sprite,
-        Project:Project,
-        RoomObject:RoomObject,
-        Camera:Camera,
+        Surface: Surface_1.Surface,
+        Sprite: Sprite_1.Sprite,
+        Project: Project_1.Project,
+        RoomObject: RoomObject_1.RoomObject,
+        Camera: Camera_1.Camera,
         Utils: {
             Object: {
                 rollup: function (object) {
@@ -65,27 +65,24 @@ function OakFrame() {
                             maxes[p].push(item[p]);
                         }
                     });
-
                     array.forEach(function (item) {
                         let i = {};
                         for (var p in item) {
                             if (isNaN(item[p])) {
                                 i[p] = item[p];
-                            } else {
+                            }
+                            else {
                                 i[p] = (item[p] / window['Oak'].Utils.Array.max(maxes[p])).toFixed(precision);
                             }
                         }
                         output.push(i);
                     });
-
                     return output;
                 }
             },
             HTML: {
-                arrayToTable(array, options?) {
-
+                arrayToTable(array, options) {
                     options = options || {};
-
                     function getProps(obj) {
                         let props = [];
                         for (var propt in obj) {
@@ -93,7 +90,6 @@ function OakFrame() {
                         }
                         return props;
                     }
-
                     let output = [];
                     let headers = [];
                     array.forEach(function (obj) {
@@ -104,11 +100,8 @@ function OakFrame() {
                             }
                         });
                     });
-
                     output.push(`<table class='${options.class || ""}'>`);
-
                     if (headers.length) {
-
                         output.push("<tr>");
                         headers.forEach(function (header) {
                             output.push("<td><strong><em>");
@@ -116,19 +109,17 @@ function OakFrame() {
                             output.push("</em></strong></td>");
                         });
                         output.push("</tr>");
-
                         array.forEach(function (item) {
                             output.push("<tr>");
                             headers.forEach(function (header) {
                                 output.push("<td>");
                                 output.push(typeof item[header] === 'number' ? item[header].toFixed(2) : item[header]);
-
                                 output.push("</td>");
                             });
                             output.push("</tr>");
                         });
-                    } else {
-
+                    }
+                    else {
                         array.forEach(function (item) {
                             output.push("<tr>");
                             output.push("<td>");
@@ -137,17 +128,13 @@ function OakFrame() {
                             output.push("</tr>");
                         });
                     }
-
                     output.push("</table>");
-
-
                     return output.join('');
                 }
             }
         }
-    }
-
+    };
 }
-
 let Oak = OakFrame();
 window['Oak'] = Oak;
+//# sourceMappingURL=Bootstrap.js.map
