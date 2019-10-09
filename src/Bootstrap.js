@@ -1,13 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const Surface_1 = require("./oakframe/Surface");
-const Vec3_1 = require("./oakframe/Vec3");
-const Vec2_1 = require("./oakframe/Vec2");
-const Sprite_1 = require("./oakframe/Sprite");
-const Mesh_1 = require("./oakframe/Mesh");
-const Project_1 = require("./oakframe/Project");
-const RoomObject_1 = require("./oakframe/RoomObject");
-const Camera_1 = require("./oakframe/Camera");
+import { Surface } from "../oakframe/Surface";
+import { Vec3 } from "../oakframe/Vec3";
+import { Vec2 } from "../oakframe/Vec2";
+import { Sprite } from "../oakframe/Sprite";
+import { Face3, Mesh } from "../oakframe/Mesh";
+import { Project } from "../oakframe/Project";
+import { RoomObject } from "../oakframe/RoomObject";
+import { Camera } from "../oakframe/Camera";
+import { SHIPP } from "../oakframe/SHIPP";
 function OakFrame() {
     return {
         getContext: function () {
@@ -20,16 +19,17 @@ function OakFrame() {
             return window['Oak'].container || document.body;
         },
         Math: {
-            Vec3: Vec3_1.Vec3,
-            Vec2: Vec2_1.Vec2,
-            Mesh: Mesh_1.Mesh,
-            Face3: Mesh_1.Face3
+            Vec3: Vec3,
+            Vec2: Vec2,
+            Mesh: Mesh,
+            Face3: Face3,
+            SHIPP: SHIPP
         },
-        Surface: Surface_1.Surface,
-        Sprite: Sprite_1.Sprite,
-        Project: Project_1.Project,
-        RoomObject: RoomObject_1.RoomObject,
-        Camera: Camera_1.Camera,
+        Surface: Surface,
+        Sprite: Sprite,
+        Project: Project,
+        RoomObject: RoomObject,
+        Camera: Camera,
         Utils: {
             Object: {
                 rollup: function (object) {
@@ -91,15 +91,17 @@ function OakFrame() {
                         return props;
                     }
                     let output = [];
-                    let headers = [];
-                    array.forEach(function (obj) {
-                        let props = getProps(obj);
-                        props.forEach(function (prop) {
-                            if (headers.indexOf(prop) == -1) {
-                                headers.push(prop);
-                            }
+                    let headers = options.headers !== undefined ? options.headers : [];
+                    if (!!headers) {
+                        array.forEach(function (obj) {
+                            let props = getProps(obj);
+                            props.forEach(function (prop) {
+                                if (headers.indexOf(prop) == -1) {
+                                    headers.push(prop);
+                                }
+                            });
                         });
-                    });
+                    }
                     output.push(`<table class='${options.class || ""}'>`);
                     if (headers.length) {
                         output.push("<tr>");
@@ -123,7 +125,7 @@ function OakFrame() {
                         array.forEach(function (item) {
                             output.push("<tr>");
                             output.push("<td>");
-                            output.push(typeof item === 'number' ? item.toFixed(2) : item);
+                            output.push(typeof item === 'number' ? item.toFixed(options.toFixed !== undefined ? options.toFixed : 2) : item);
                             output.push("</td>");
                             output.push("</tr>");
                         });
@@ -137,4 +139,24 @@ function OakFrame() {
 }
 let Oak = OakFrame();
 window['Oak'] = Oak;
+var lastTime = 0, vendors = ['ms', 'moz', 'webkit', 'o'], x;
+for (x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+        || window[vendors[x] + 'CancelRequestAnimationFrame'];
+}
+if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+        var currTime = new Date().getTime(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = window.setTimeout(function () {
+            callback(currTime + timeToCall);
+        }, timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+    };
+}
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+        window.clearTimeout(id);
+    };
+}
 //# sourceMappingURL=Bootstrap.js.map

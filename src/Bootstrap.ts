@@ -1,11 +1,12 @@
-import {Surface} from "./oakframe/Surface";
-import {Vec3} from "./oakframe/Vec3";
-import {Vec2} from "./oakframe/Vec2";
-import {Sprite} from "./oakframe/Sprite";
-import {Face3, Mesh} from "./oakframe/Mesh";
-import {Project} from "./oakframe/Project";
-import {RoomObject} from "./oakframe/RoomObject";
-import {Camera} from "./oakframe/Camera";
+import {Surface} from "../oakframe/Surface";
+import {Vec3} from "../oakframe/Vec3";
+import {Vec2} from "../oakframe/Vec2";
+import {Sprite} from "../oakframe/Sprite";
+import {Face3, Mesh} from "../oakframe/Mesh";
+import {Project} from "../oakframe/Project";
+import {RoomObject} from "../oakframe/RoomObject";
+import {Camera} from "../oakframe/Camera";
+import {SHIPP} from "../oakframe/SHIPP";
 
 function OakFrame() {
 
@@ -23,7 +24,8 @@ function OakFrame() {
             Vec3: Vec3,
             Vec2: Vec2,
             Mesh: Mesh,
-            Face3: Face3
+            Face3: Face3,
+            SHIPP:SHIPP
         },
         Surface: Surface,
         Sprite: Sprite,
@@ -95,15 +97,18 @@ function OakFrame() {
                     }
 
                     let output = [];
-                    let headers = [];
-                    array.forEach(function (obj) {
-                        let props = getProps(obj);
-                        props.forEach(function (prop) {
-                            if (headers.indexOf(prop) == -1) {
-                                headers.push(prop);
-                            }
+                    let headers = options.headers !== undefined ? options.headers : [];
+
+                    if (!!headers) {
+                        array.forEach(function (obj) {
+                            let props = getProps(obj);
+                            props.forEach(function (prop) {
+                                if (headers.indexOf(prop) == -1) {
+                                    headers.push(prop);
+                                }
+                            });
                         });
-                    });
+                    }
 
                     output.push(`<table class='${options.class || ""}'>`);
 
@@ -132,7 +137,7 @@ function OakFrame() {
                         array.forEach(function (item) {
                             output.push("<tr>");
                             output.push("<td>");
-                            output.push(typeof item === 'number' ? item.toFixed(2) : item);
+                            output.push(typeof item === 'number' ? item.toFixed(options.toFixed!==undefined?options.toFixed:2) : item);
                             output.push("</td>");
                             output.push("</tr>");
                         });
@@ -151,3 +156,30 @@ function OakFrame() {
 
 let Oak = OakFrame();
 window['Oak'] = Oak;
+var lastTime = 0,
+    vendors = ['ms', 'moz', 'webkit', 'o'],
+    x;
+
+for (x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame  = window[vendors[x] + 'CancelAnimationFrame']
+        || window[vendors[x] + 'CancelRequestAnimationFrame'];
+}
+
+if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+        var currTime = new Date().getTime(),
+            timeToCall = Math.max(0, 16 - (currTime - lastTime)),
+            id = window.setTimeout(function () {
+                callback(currTime + timeToCall);
+            }, timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+    };
+}
+
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+        window.clearTimeout(id);
+    };
+}
