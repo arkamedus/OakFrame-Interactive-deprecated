@@ -7,8 +7,6 @@ export class Surface {
     private _set_size;
 
     constructor() {
-        let self=this;
-        //this.nodes = 0;
         this.element = <HTMLCanvasElement>document.createElement('canvas');
         if (!this.element.getContext || !this.element.getContext("2d")) {
             console.error('canvas is not supported.');
@@ -17,10 +15,9 @@ export class Surface {
         this.context = this.element.getContext('2d');
         this._width = this.context.width||300;
         this._height = this.context.height||150;
-        this._scaling = 1;//(window.innerWidth < 600 ? 1 : window.devicePixelRatio) || 1;
+        this._scaling =  (window.innerWidth < 600 ? 1 : window.devicePixelRatio) || 1;
         this.context.font = (20 * this._scaling) + "px DM Sans";
         return this;
-
     }
 
     drawText(x, y, text) {
@@ -57,7 +54,7 @@ export class Surface {
     };
 
     maximize() {
-        let node = this.getElement().parentNode;//.parentNode.parentNode;
+        let node = this.getElement().parentNode;
         if (node) {
             let w = node.offsetWidth-(parseInt(node.style.paddingRight||"0",10) + parseInt(node.style.paddingLeft||"0",10) + parseInt(node.style.borderLeftWidth||"0",10))||1;
             let h = node.offsetHeight||this.getHeight()||1;
