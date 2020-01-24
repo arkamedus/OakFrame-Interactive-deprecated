@@ -4,3 +4,9 @@
 .idea/**
 .sass-cache/
 .DS_Store
+lib/**.js
+lib/**.js.map
+src/**.js
+src/**.js.map
+oakframe/**.js
+oakframe/**.js.map

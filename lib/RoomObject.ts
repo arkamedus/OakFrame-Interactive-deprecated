@@ -1,11 +1,10 @@
 import {Vec3} from "./Vec3";
 import {FormField} from "./Form";
 import {State} from "./State";
-import {Mesh} from "./Mesh";
 import {EntityBehavior, TaskManager} from "./TaskManager";
-import {PLYLoader} from "./PLYLoader";
+import {HasComponent} from "./Component";
 
-export class RoomObject {
+export class RoomObject extends HasComponent {
     private _tmp: number;
     public position;
     public scale;
@@ -27,6 +26,7 @@ export class RoomObject {
     public sprite;
 
     constructor(object?: RoomObject) {
+        super();
         this.name = 'Default Object';
         this.position = new Vec3();
         this.scale = new Vec3();
