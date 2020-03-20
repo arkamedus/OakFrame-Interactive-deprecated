@@ -6,8 +6,8 @@ export class Surface {
     private _scaling;
     private _set_size;
 
-    constructor() {
-        this.element = <HTMLCanvasElement>document.createElement('canvas');
+    constructor(canvas?:HTMLCanvasElement) {
+        this.element = canvas||<HTMLCanvasElement>document.createElement('canvas');
         if (!this.element.getContext || !this.element.getContext("2d")) {
             console.error('canvas is not supported.');
         }
@@ -36,9 +36,9 @@ export class Surface {
 
         height = Math.min(height, window.innerHeight * this._scaling);
         width = Math.min(width, window.innerWidth * this._scaling);
-        this.element.width = width;
+        this.element.width = width / this._scaling;
         this._width = width;
-        this.element.height = height;
+        this.element.height = height / this._scaling;
         this._height = height;
         this.context.width = width * this._scaling;
         this.context.height = height * this._scaling;
@@ -84,7 +84,7 @@ export class Surface {
 
     fill(col) {
         if (!this._set_size){
-            this.maximize();
+           this.maximize();
         }
 
         this.context.beginPath();
