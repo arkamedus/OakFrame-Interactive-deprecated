@@ -16,4 +16,5 @@ export class VelocityPositionComponent extends Component{
         entity.position.add(entity.velocity);
         entity.velocity.mulI(0.85);
     }
+
 }

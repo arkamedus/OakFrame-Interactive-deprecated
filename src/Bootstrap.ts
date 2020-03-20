@@ -1,12 +1,12 @@
-import {Surface} from "../oakframe/Surface";
-import {Vec3} from "../oakframe/Vec3";
-import {Vec2} from "../oakframe/Vec2";
-import {Sprite} from "../oakframe/Sprite";
-import {Face3, Mesh} from "../oakframe/Mesh";
-import {Project} from "../oakframe/Project";
-import {RoomObject} from "../oakframe/RoomObject";
-import {Camera} from "../oakframe/Camera";
-import {SHIPP} from "../oakframe/SHIPP";
+import {Surface} from "../lib/Surface";
+import {Vec3} from "../lib/Vec3";
+import {Vec2} from "../lib/Vec2";
+import {Sprite} from "../lib/Sprite";
+import {Face3, Mesh} from "../lib/Mesh";
+import {Project} from "../lib/Project";
+import {RoomObject} from "../lib/RoomObject";
+import {Camera} from "../lib/Camera";
+import {SHIPP} from "../lib/SHIPP";
 
 function OakFrame() {
 

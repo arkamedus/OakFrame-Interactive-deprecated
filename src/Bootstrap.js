@@ -1,12 +1,14 @@
-import { Surface } from "../oakframe/Surface";
-import { Vec3 } from "../oakframe/Vec3";
-import { Vec2 } from "../oakframe/Vec2";
-import { Sprite } from "../oakframe/Sprite";
-import { Face3, Mesh } from "../oakframe/Mesh";
-import { Project } from "../oakframe/Project";
-import { RoomObject } from "../oakframe/RoomObject";
-import { Camera } from "../oakframe/Camera";
-import { SHIPP } from "../oakframe/SHIPP";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Surface_1 = require("../lib/Surface");
+const Vec3_1 = require("../lib/Vec3");
+const Vec2_1 = require("../lib/Vec2");
+const Sprite_1 = require("../lib/Sprite");
+const Mesh_1 = require("../lib/Mesh");
+const Project_1 = require("../lib/Project");
+const RoomObject_1 = require("../lib/RoomObject");
+const Camera_1 = require("../lib/Camera");
+const SHIPP_1 = require("../lib/SHIPP");
 function OakFrame() {
     return {
         getContext: function () {
@@ -19,17 +21,17 @@ function OakFrame() {
             return window['Oak'].container || document.body;
         },
         Math: {
-            Vec3: Vec3,
-            Vec2: Vec2,
-            Mesh: Mesh,
-            Face3: Face3,
-            SHIPP: SHIPP
+            Vec3: Vec3_1.Vec3,
+            Vec2: Vec2_1.Vec2,
+            Mesh: Mesh_1.Mesh,
+            Face3: Mesh_1.Face3,
+            SHIPP: SHIPP_1.SHIPP
         },
-        Surface: Surface,
-        Sprite: Sprite,
-        Project: Project,
-        RoomObject: RoomObject,
-        Camera: Camera,
+        Surface: Surface_1.Surface,
+        Sprite: Sprite_1.Sprite,
+        Project: Project_1.Project,
+        RoomObject: RoomObject_1.RoomObject,
+        Camera: Camera_1.Camera,
         Utils: {
             Object: {
                 rollup: function (object) {

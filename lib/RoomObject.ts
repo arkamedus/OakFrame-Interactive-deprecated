@@ -60,6 +60,7 @@ export class RoomObject extends HasComponent {
             this.tags = object.tags || [];
             this.name = object.name;
             this.timeline = object.timeline || null;
+            this.components = object.components || null;
             object.position ? this.position.copy(object.position) : 0;
             object.scale ? this.scale.copy(object.scale) : 0;
             object.game_object ? (this.game_object = parseInt("" + object.game_object)) : 0;

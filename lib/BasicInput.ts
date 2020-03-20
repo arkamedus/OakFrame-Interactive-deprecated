@@ -132,7 +132,7 @@ export class BasicInput {
 
 
     onTouchDown(event) {
-       // console.log('touchDown');
+        console.log('touchDown');
         window['BasicInput'].start_last.x = event.changedTouches[0].pageX;
         window['BasicInput'].start_last.y = event.changedTouches[0].pageY;
         window['BasicInput'].pos.x = event.changedTouches[0].pageX;
@@ -207,7 +207,7 @@ export class BasicInput {
         window['BasicInput'].setPos(event);
        // this.button[mb] = true;
        // this.setPos(event);
-        //  console.log(mb);
+          console.log(mb);
         return mb;
     }
 
