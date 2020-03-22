@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/arkamedus/OakFrame/issues"
   },
-  "homepage": "https://github.com/arkamedus/OakFrame#readme"
+  "homepage": "https://github.com/arkamedus/OakFrame#readme",
+  "devDependencies": {
+    "@types/node": "^13.9.2"
+  },
+  "types": "index.d.ts",
+  "dependencies": {
+    "gl-matrix": "^3.2.1"
+  }
 }
