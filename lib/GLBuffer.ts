@@ -10,6 +10,31 @@ export class GLBuffer {
             return v * scale
         });
     }
+
+    translate(x,y,z){
+        this.vertices = this.vertices.map((v, idx) => {
+            if (idx % 5 === 0){
+                return v+x;
+            }else if (idx % 5 === 1){
+                return v+y;
+            }else if (idx % 5 === 2){
+                return v+z;
+            }
+            return v;
+        });
+    }
+
+    appendBuffer(buffer:GLBuffer){
+        let self = this;
+        let indlen = (this.vertices.length/5);
+        this.vertices=this.vertices.concat(buffer.vertices);
+
+        buffer.indices.forEach(function(ind){
+            self.indices.push(ind+indlen);
+        });
+
+        console.log(this.vertices, this.indices);
+    }
 }
 
 export class GLCubeBuffer extends GLBuffer {

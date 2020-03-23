@@ -1,6 +1,12 @@
 import shaderTextureVertex from "./shader/textureVertex.glsl";
 import shaderTextureFragment from "./shader/textureFragment.glsl";
 
+import cameraShadowVertex from "./shader/cameraShadowVertex.glsl";
+import cameraShadowFragment from "./shader/cameraShadowFragment.glsl";
+
+import lightBufferVertex from "./shader/lightBufferVertex.glsl";
+import lightBufferFragment from "./shader/lightBufferFragment.glsl";
+
 export interface GLShader {
     vertexShader:string;
     fragmentShader:string;
@@ -33,4 +39,14 @@ void main()
 export class GLShaderTexture implements GLShader {
     vertexShader = shaderTextureVertex;
     fragmentShader = shaderTextureFragment;
+}
+
+export class GLCameraShadowTextureShader implements GLShader {
+    vertexShader = cameraShadowVertex;
+    fragmentShader = cameraShadowFragment;
+}
+
+export class GLLightShadowTextureShader implements GLShader {
+    vertexShader = lightBufferVertex;
+    fragmentShader = lightBufferFragment;
 }
