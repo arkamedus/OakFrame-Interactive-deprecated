@@ -1,9 +1,11 @@
 import {Sprite} from "./Sprite";
+import {Listeners} from "./PubSub";
 
-export class AssetLoader {
+export class AssetLoader extends Listeners{
     public queued;
     public loaded;
     constructor (){
+        super();
         this.queued = 0;
         this.loaded = 0;
     }
@@ -13,6 +15,9 @@ export class AssetLoader {
         let s = new Sprite({src: src});
         s.on('load',function(){
             self.loaded++;
+            if (self.loaded >= self.queued){
+                self.publish("loaded",true)
+            }
         });
         if (preload) { s.getImage(); }
         return s;

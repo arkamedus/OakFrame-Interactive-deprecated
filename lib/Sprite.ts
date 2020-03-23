@@ -2,10 +2,11 @@ import {Listeners} from "./PubSub";
 
 export class Sprite {
     private src: Array<String>;
-    private images: Array<any>;
+    public images: Array<HTMLImageElement>;
     private image_index;
     private image_speed;
     private listener;
+    public ready;
 
     constructor(sprite) {
         this.src = [];
@@ -14,6 +15,7 @@ export class Sprite {
             this.src = ((sprite.src) ? (Array.isArray(sprite.src) ? sprite.src : [sprite.src]) : []);
         }
         this.listener = new Listeners();
+        this.ready = false;
     }
 
     getImage() {
@@ -36,9 +38,9 @@ export class Sprite {
         }
 
         if (img) {
-            if (img.isReady) {
+            //if (img.isReady) {
                 return img;
-            }
+            //}
         }
         return false;
     }

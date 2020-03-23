@@ -1,9 +1,12 @@
+import shaderTextureVertex from "./shader/textureVertex.glsl";
+import shaderTextureFragment from "./shader/textureFragment.glsl";
+
 export interface GLShader {
     vertexShader:string;
     fragmentShader:string;
 }
 
-export class GLShaderBasic {
+export class GLShaderBasic implements GLShader{
     vertexShader=`precision mediump float;
     attribute vec3 vertPosition;
     attribute vec3 vertColor;
@@ -25,4 +28,9 @@ void main()
 {
   gl_FragColor = vec4(fragColor, 1.0);
 }`;
+}
+
+export class GLShaderTexture implements GLShader {
+    vertexShader = shaderTextureVertex;
+    fragmentShader = shaderTextureFragment;
 }
