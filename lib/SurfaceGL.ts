@@ -48,6 +48,8 @@ export class SurfaceGL {
         var canvasIsPressed = false
         var xRotation = Math.PI / 20
         var yRotation = 0
+        var xVelocity = 0;
+        var yVelocity = 0;
         var lastPressX
         var lastPressY
         canvas.onmousedown = function (e) {
@@ -63,11 +65,8 @@ export class SurfaceGL {
         }
         canvas.onmousemove = function (e) {
             if (canvasIsPressed) {
-                xRotation += (e.pageY - lastPressY) / 50
-                yRotation -= (e.pageX - lastPressX) / 50
-
-                xRotation = Math.min(xRotation, Math.PI / 2.5)
-                xRotation = Math.max(xRotation, 0.1)
+                xVelocity = (e.pageY - lastPressY) / 50
+                yVelocity = -(e.pageX - lastPressX) / 50;
 
                 lastPressX = e.pageX
                 lastPressY = e.pageY
@@ -81,12 +80,9 @@ export class SurfaceGL {
         })
         canvas.addEventListener('touchmove', function (e) {
             e.preventDefault()
-            xRotation += (e.touches[0].clientY - lastPressY) / 50
-            yRotation -= (e.touches[0].clientX - lastPressX) / 50
-
-            xRotation = Math.min(xRotation, Math.PI / 2.5)
-            xRotation = Math.max(xRotation, 0.1)
-
+            xVelocity = (e.touches[0].clientY - lastPressY) / 100
+            yVelocity = -(e.touches[0].clientX - lastPressX) / 50
+            
             lastPressX = e.touches[0].clientX
             lastPressY = e.touches[0].clientY
         })
@@ -157,7 +153,6 @@ export class SurfaceGL {
 
 // We enable our vertex attributes for our camera's shader.
         var vertexPositionAttrib = gl.getAttribLocation(lightShaderProgram, 'aVertexPosition')
-        gl.enableVertexAttribArray(vertexPositionAttrib)
 
         var glPositionBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, glPositionBuffer)
@@ -168,6 +163,10 @@ export class SurfaceGL {
             5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
             0 // Offset from the beginning of a single vertex to this attribute
         )
+
+
+
+        gl.enableVertexAttribArray(vertexPositionAttrib);
 
         var glIndexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glIndexBuffer)
@@ -206,7 +205,7 @@ export class SurfaceGL {
 // We create an orthographic projection and view matrix from which our light
 // will vie the scene
         var lightProjectionMatrix = mat4.ortho([], -20, 20, -20, 20, -20.0, 80)
-        var lightViewMatrix = mat4.lookAt([], [0, 2, -3], [0, 0, 0], [0, 1, 0])
+        var lightViewMatrix = mat4.lookAt([], [0, 4, 0], [3, 0, 5], [0, 1, 0])
 
         var shadowPMatrix = gl.getUniformLocation(lightShaderProgram, 'uPMatrix')
         var shadowMVMatrix = gl.getUniformLocation(lightShaderProgram, 'uMVMatrix')
@@ -240,9 +239,6 @@ export class SurfaceGL {
 // We rotate the dragon about the y axis every frame
         var dragonRotateY = 0
         function drawShadowMap () {
-            
-            
-            dragonRotateY += 0.01
 
             gl.useProgram(lightShaderProgram)
 
@@ -261,12 +257,12 @@ export class SurfaceGL {
                 gl.FALSE,
                 5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
                 0 // Offset from the beginning of a single vertex to this attribute
-            )
+            );
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glIndexBuffer)
 
             // We draw our dragon onto our shadow map texture
             var lightModelMVMatrix = mat4.create()
-            mat4.rotateY(lightModelMVMatrix, lightModelMVMatrix, dragonRotateY)
+                // mat4.rotateY(lightModelMVMatrix, lightModelMVMatrix, dragonRotateY)
             mat4.multiply(lightModelMVMatrix, lightViewMatrix, lightModelMVMatrix)
             gl.uniformMatrix4fv(shadowMVMatrix, false, lightModelMVMatrix)
 
@@ -276,8 +272,16 @@ export class SurfaceGL {
 
         this._render_loop = function () {
 
+            xVelocity *= 0.8;
+            yVelocity *= 0.8;
+
+            xRotation += xVelocity
+            yRotation += yVelocity
+
+            xRotation = Math.min(xRotation, Math.PI / 2.5);
+            xRotation = Math.max(xRotation, 0.1);
+
             drawShadowMap();
-dragonRotateY += 0.01;
             gl.useProgram(cameraShaderProgram)
             gl.viewport(0, 0, surface._width, surface._height)
             gl.clearColor(0.98, 0.98, 0.98, 1)
@@ -285,7 +289,7 @@ dragonRotateY += 0.01;
 
             // Create our camera view matrix
             var camera = mat4.create()
-            mat4.translate(camera, camera, [0, 0, 24])
+            mat4.translate(camera, camera, [12, 0, 24])
             var xRotMatrix = mat4.create()
             var yRotMatrix = mat4.create()
             mat4.rotateX(xRotMatrix, xRotMatrix, -xRotation)
